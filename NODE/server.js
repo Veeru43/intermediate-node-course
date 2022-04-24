@@ -4,6 +4,7 @@ const mongoose= require('mongoose');
 const bodyParser= require('body-parser');
 const port=8000;
 const User= require('./models/User');
+const e = require('express');
 //localhost
 mongoose.connect('mongodb://localhost:27017/userData')
 
@@ -88,5 +89,26 @@ app.route('/users/:id')
 })
 // DELETE
 .delete((req,res)=>{
-  // User.findByIdAndDelete()
+  User.findByIdAndDelete(
+    req.params.id,
+    (err,data)=>{
+      if(err){
+        res.json({
+          success:false,
+          message:err
+        })
+      } else if(!data){
+        res.json({
+          success:false,
+          message:"Data Not Found with this ID"
+        })
+      } else {
+        res.json({
+          success:true,
+          message:"Deleted successfully",
+          data:data
+        })
+      }
+    }
+  )
 })
