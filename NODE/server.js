@@ -1,0 +1,37 @@
+const express = require('express');
+const app = express();
+const mongoose= require('mongoose');
+const bodyParser= require('body-parser');
+const port=8000;
+const User= require('./models/User');
+//localhost
+mongoose.connect('mongodb://localhost:27017')
+
+app.use(bodyParser.json());
+
+app.listen(port, ()=>{
+	console.log(`server is listening on port:${port}`)
+})
+
+// CREATE
+app.post('/users',(req,res)=>{
+  User.create()
+  res.json({
+    success:true,
+    message: 'successfully got Users. Nice!',
+ })
+})
+
+app.route('/users/:id')
+// READ
+.get((req,res)=>{
+  // User.findById()
+})
+// UPDATE
+.put((req,res)=>{
+  // User.findByIdAndUpdate()
+})
+// DELETE
+.delete((req,res)=>{
+  // User.findByIdAndDelete()
+})
